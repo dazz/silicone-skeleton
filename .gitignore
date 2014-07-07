@@ -1,1 +1,3 @@
-app/open
+app/vendor/*
+app/open/*
+composer.lock
