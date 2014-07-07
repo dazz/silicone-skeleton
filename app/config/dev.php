@@ -21,4 +21,5 @@ $app->register(new Silex\Provider\WebProfilerServiceProvider(), array(
     'profiler.mount_prefix' => '/_profiler',
 ));
 $app->register(new Silicone\Provider\WebProfilerServiceProvider());
+$app['profiler']->add(new \Symfony\Component\HttpKernel\DataCollector\EventDataCollector($app['dispatcher']));
 

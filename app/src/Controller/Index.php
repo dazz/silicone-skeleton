@@ -7,7 +7,7 @@ use Silicone\Controller;
 class Index extends Controller
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/", name="index", methods="GET")
      */
     public function index()
     {

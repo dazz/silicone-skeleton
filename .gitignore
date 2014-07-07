@@ -1,5 +1,1 @@
-app/vendor/*
-app/open/*
-composer.lock
-.idea/
-
+app/open

@@ -45,14 +45,22 @@ $app['doctrine.paths'] = array(
 );
 
 // Monolog
-$app->register(new Silex\Provider\MonologServiceProvider());
-$app['monolog.logfile'] = $app->getLogDir() . '/log.txt';
-$app['monolog.name'] = 'Silicone';
+$app->register(
+    new Silex\Provider\MonologServiceProvider(),
+    [
+        'monolog.handler' => new \Monolog\Handler\RotatingFileHandler(
+                $app->getLogDir() . '/application.log',
+                5,
+                \Monolog\Logger::DEBUG
+            ),
+        'monolog.name' => 'MyApplication',
+    ]
+);
 
 // Session
 $app->register(new Silex\Provider\SessionServiceProvider(), array(
     'session.storage.options' => array(
-        'name' => 'Silicone',
+        'name' => 'MyApplication',
     )
 ));
 
@@ -81,7 +89,7 @@ $app['validator.unique'] = function () use ($app) {
 $app->register(new Silex\Provider\FormServiceProvider());
 
 // Security
-$app['security.user_class'] = 'Entity\User';
+$app['security.user_class'] = \Entity\User::class;
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.firewalls' => array(
         'default' => array(
@@ -114,5 +122,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     )
 ));
 $app->register(new Silex\Provider\RememberMeServiceProvider());
-$r = new \ReflectionClass('Symfony\Component\Security\Core\SecurityContext');
-$app['translator']->addResource('xliff', dirname($r->getFilename()).'/../Resources/translations/security.'.$app['locale'].'.xlf', $app['locale'], 'security');
+$r = new \ReflectionClass(\Symfony\Component\Security\Core\SecurityContext::class);
+$app['translator']->addResource(
+    'xliff',
+    dirname($r->getFilename()).'/../Resources/translations/security.'.$app['locale'].'.xlf', $app['locale'], 'security');

@@ -39,6 +39,6 @@ class UserProvider implements UserProviderInterface
     public function supportsClass($class)
     {
         $rc = new \ReflectionClass($class);
-        return $rc->implementsInterface('Symfony\Component\Security\Core\User\UserInterface');
+        return $rc->implementsInterface(\Symfony\Component\Security\Core\User\UserInterface::class);
     }
 }

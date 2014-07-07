@@ -1,4 +1,4 @@
 <?php
-$loader = require_once __DIR__ . '/vendor/autoload.php';
+$app = new Application();
 
-Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+return $app;
